@@ -3,4 +3,5 @@
 /data/widsdatathon2025.zip
 /data/TEST
 /data/TRAIN
-
+**/__pycache__
+**/.DS_Store
