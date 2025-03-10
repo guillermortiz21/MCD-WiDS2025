@@ -27,11 +27,11 @@ def main():
 
     # evaluate models (adhd)
     ev = ModelEvaluation(X=df_train, y=labels[targets[0]])
-    ev.evaluate_model(LogisticRegression(solver='lbfgs', multi_class='multinomial', max_iter=1000))
+    ev.evaluate_model(LogisticRegression(solver='lbfgs', max_iter=5000))
 
     # evaluate models (sex_f)
     ev = ModelEvaluation(X=df_train, y=labels[targets[1]])
-    ev.evaluate_model(LogisticRegression(solver='lbfgs', multi_class='multinomial', max_iter=1000))
+    ev.evaluate_model(LogisticRegression(solver='lbfgs', max_iter=5000))
     
 
 

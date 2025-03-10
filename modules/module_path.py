@@ -49,3 +49,19 @@ def plots_data_path() -> Path:
             return data_folder
         else:
             raise Exception("Plots directory not found")
+        
+def mlruns_data_path() -> Path:
+    """
+    Returns the location of the mlruns directory, allowing for script executions in subfolders without worrying about the
+    relative location of the data
+
+    :return: the path to the plots directory
+    """
+    cwd = Path("..")
+    for folder in (cwd, cwd / "..", cwd / ".." / ".."):
+        data_folder = folder / "mlruns"
+        if data_folder.exists() and data_folder.is_dir():
+            print("Mlruns directory found in ", data_folder)
+            return data_folder
+        else:
+            raise Exception("Mlruns directory not found")
