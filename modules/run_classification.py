@@ -12,7 +12,7 @@ from sklearn.decomposition import PCA
 # External modules
 from module_path import test_data_path, train_data_path, plots_data_path
 from module_data import Dataset
-from module_model import ModelEvaluation
+from module_model import ModelEvaluation, ModelSubmission
 
 
 def main():
@@ -26,14 +26,16 @@ def main():
     targets = ['ADHD_Outcome',  'Sex_F']
 
     # evaluate models (adhd)
-    ev = ModelEvaluation(X=df_train, y=labels[targets[0]])
+    ev = ModelEvaluation(X=df_train, y=labels[targets[0]], tag='adhd')
     ev.evaluate_model(LogisticRegression(solver='lbfgs', max_iter=5000))
 
     # evaluate models (sex_f)
-    ev = ModelEvaluation(X=df_train, y=labels[targets[1]])
+    ev = ModelEvaluation(X=df_train, y=labels[targets[1]], tag='sex_f')
     ev.evaluate_model(LogisticRegression(solver='lbfgs', max_iter=5000))
     
-
+    # prediction with test dataset
+    sub = ModelSubmission(X=df_test, version=1, threshold=0.5)
+    sub.to_submission(output_name='submission.csv')
 
 if __name__ == '__main__':
     main()

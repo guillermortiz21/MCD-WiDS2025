@@ -70,12 +70,16 @@ class Dataset:
         labels = pd.read_excel(os.path.join(train_path,"TRAINING_SOLUTIONS.xlsx")).set_index("participant_id")
         assert all(train_combined.index == labels.index), "Label IDs don't match train IDs"
 
-        # drop columns
+        # drop columns (cause missing values)
         drop_cols = [COL_MRI_TRACK_AGE_AT_SCAN, COL_PREINT_DEMOS_FAM_CHILD_ETHNICITY]
         train_combined.drop(drop_cols, axis=1, inplace=True)
         test_combined.drop(drop_cols, axis=1, inplace=True)
 
+        # impute missing values
+        test_combined.fillna(test_combined.median(numeric_only=True), inplace=True)
+
+        # Sample
         if self.num_samples is not None:
-            df = df.sample(self.num_samples, random_state=self.random_seed)        
+            train_combined = train_combined.sample(self.num_samples, random_state=self.random_seed)        
 
         return train_combined, test_combined, labels
